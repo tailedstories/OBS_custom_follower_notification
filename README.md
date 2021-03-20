@@ -51,6 +51,7 @@ Open the file "get_moderator_activity.ps1" with text editor. Set up values:
   1) $myUname - your user name. It will be used to navigate to your page
   2) $filepath_audio - attach the audio that will be played when new person follows you
   3) $duration - by default your new follower popup would be the same duration as audio that you selected. But if you want to set nimber of seconds to wait instead, you can set up the number for duration (e.g. $duration = "5")
+  4) cd - set where you saved your script files including stream folder (e.g. "D:\Automation\stream")
 
 
 ## First Time Usage
