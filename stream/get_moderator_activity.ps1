@@ -60,11 +60,11 @@ $ieObject.Visible = $true
 $ieObject | Invoke-IEWait
 Start-Sleep -Seconds 20
 
-
+$filepath = [uri] $filepath_audio
 $wmplayer = New-Object System.Windows.Media.MediaPlayer
 $wmplayer.Open($filepath)
 Start-Sleep 2 # This allows the $wmplayer time to load the audio file
-if($duration -eq ""){$duration = $wmplayer.NaturalDuration.TimeSpan.TotalSeconds}else{$duration=$duration -as [int]}
+if($duration -like ""){$duration = $wmplayer.NaturalDuration.TimeSpan.TotalSeconds}else{$duration=$duration -as [int]}
 $wmplayer.Close()
 
 
@@ -130,7 +130,7 @@ $document = $currentDocument.IHTMLDocument3_documentElement
 		
 		$nam = $obs.GetCurrentScene() | select Name
 		
-		$filepath = [uri] $filepath_audio
+		
 		$wmplayer = New-Object System.Windows.Media.MediaPlayer
 		$wmplayer.Open($filepath)
 		Start-Sleep 2 # This allows the $wmplayer time to load the audio file
@@ -141,7 +141,7 @@ $document = $currentDocument.IHTMLDocument3_documentElement
 		
 		Show-obsSource -SceneName $nam.Name -SourceName "follower_animation" -Show $true
 		
-		Start-Sleep ($duration + 4)
+		Start-Sleep ($duration + 2)
 		$wmplayer.Stop()
 		$wmplayer.Close()
 
