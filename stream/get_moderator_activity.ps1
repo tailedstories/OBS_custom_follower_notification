@@ -41,12 +41,6 @@ function Invoke-IEWait {
 }
 
 
-$wmplayer = New-Object System.Windows.Media.MediaPlayer
-$wmplayer.Open($filepath)
-Start-Sleep 2 # This allows the $wmplayer time to load the audio file
-if($duration -eq ""){$duration = $wmplayer.NaturalDuration.TimeSpan.TotalSeconds}else{$duration=$duration -as [int]}
-$wmplayer.Close()
-
 
 
 Add-Type -AssemblyName presentationCore
@@ -65,6 +59,15 @@ $ieObject.Visible = $true
 
 $ieObject | Invoke-IEWait
 Start-Sleep -Seconds 20
+
+
+$wmplayer = New-Object System.Windows.Media.MediaPlayer
+$wmplayer.Open($filepath)
+Start-Sleep 2 # This allows the $wmplayer time to load the audio file
+if($duration -eq ""){$duration = $wmplayer.NaturalDuration.TimeSpan.TotalSeconds}else{$duration=$duration -as [int]}
+$wmplayer.Close()
+
+
 
 While (1){
 
@@ -138,7 +141,7 @@ $document = $currentDocument.IHTMLDocument3_documentElement
 		
 		Show-obsSource -SceneName $nam.Name -SourceName "follower_animation" -Show $true
 		
-		Start-Sleep ($duration + 2)
+		Start-Sleep ($duration + 4)
 		$wmplayer.Stop()
 		$wmplayer.Close()
 
