@@ -76,26 +76,33 @@ $document = $currentDocument.IHTMLDocument3_documentElement
 
 
     $i = $document.innerHTML
-    $ii = $i -split 'class="activity-list-layout">'
-    $iii = $ii.Get(1) -split 'class="tw-link tw-link--button tw-link--inherit">'
+    #$ii = $i -split 'class="activity-list-layout">'
+    #$iii = $ii.Get(1) -split 'class="tw-link tw-link--button tw-link--inherit">'
+    $ii = $i -split 'class="new-event-notification-banner tw-absolute tw-full-width"'
+    $iii = $ii.get(1) -split "</div></div></div></div></div>"
+    $iii = $iii.get(0) -split "</button></p>"
 
     $k=0
     $arr = New-Object System.Collections.ArrayList
     $lastfollow = Get-Content -Path "./lastfollow.txt"
     $mycancel=0
 
+
+
     foreach ($follower in $iii){
-        $f = $follower -split '</button>'
-        if( $lastfollow -eq $f.get(0)) {$mycancel=1}
+        $f = $follower -split 'tw-link">'
+        if ($f.Length -gt 1) {
+            #if( $lastfollow -eq $f.get(1)) {$mycancel=1}
 
 #        if($mycancel > 0){
-            if(($k -gt 0) -and ($k -lt 11)) {
+            if($k -lt 11) {
                 $s=$follower -split '</button>'
-                $arr.Add($s.get(0))
+                $arr.Add($f.get(1))
             }
-            $k=$k+1
- #       }
+        }
+        $k=$k+1
     }
+    
 
     $ss=$arr | out-string
     $lastfollow=$lastfollow | out-string
@@ -150,5 +157,5 @@ $document = $currentDocument.IHTMLDocument3_documentElement
     }
 
 
-    Start-Sleep -s 3
+    Start-Sleep -s 1
 }
